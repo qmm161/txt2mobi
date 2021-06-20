@@ -4,8 +4,8 @@ import os
 import sys
 import shutil
 from txt2mobi.exceptions import EncodingError
-from utilities import current_working_dir, init_project
-from txt2html import Book
+from txt2mobi.utilities import current_working_dir, init_project
+from txt2mobi.txt2html import Book
 
 
 
@@ -29,7 +29,7 @@ def generate_project(title):
     for idx in range(1, book_count + 1):
         os.system(book.gen_command(idx))
         src_path = os.path.join(current_working_dir(), 'project-%s.mobi' % idx)
-        des_path = os.path.join(current_working_dir(), '%s-%s.mobi' % (book.name.encode('utf8'), idx))
+        des_path = os.path.join(current_working_dir(), '%s-%s.mobi' % (book.name, idx))
         shutil.move(src_path, des_path)
 
 def test_project(title):
@@ -52,23 +52,23 @@ def test_project(title):
             with open(opf_path, 'w') as f:
                 f.write(book.gen_opf_file(idx))
                 f.close()
-            print "opf文件生成完毕"
+            print ("opf文件生成完毕")
 
             # 生成ncx文件
             ncx_path = os.path.join(current_working_dir(), 'toc-%s.ncx' % idx)
             with open(ncx_path, 'w') as f:
                 f.write(book.gen_ncx(idx))
                 f.close()
-            print "ncx文件生成完毕"
+            print ("ncx文件生成完毕")
 
             # 生成book.html
             book_path = os.path.join(current_working_dir(), 'book-%s.html' % idx)
             with open(book_path, 'w') as f:
                 f.write(book.gen_html_file(idx))
                 f.close()
-            print "book-%s.html生成完毕" % idx
-        except EncodingError, e:
-            print "文件编码异常无法解析,请尝试用iconv来转码成utf8后再试,或者提交issuse"
+            print ("book-%s.html生成完毕" % idx)
+        except EncodingError as e:
+            print ("文件编码异常无法解析,请尝试用iconv来转码成utf8后再试,或者提交issuse")
             sys.exit(1)
     return book
 

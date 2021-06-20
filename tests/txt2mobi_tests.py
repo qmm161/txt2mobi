@@ -30,8 +30,8 @@ class TestTxt2MobiFunction(unittest.TestCase):
         self.assertEquals(lines[2].strip(), '')
         self.assertEquals(lines[3].strip(), '[book]')
         self.assertEquals(lines[4].strip(), 'cover-img=cover.png')
-        self.assertEquals(lines[5].strip(), u'title=书名'.encode('utf8'))
-        self.assertEquals(lines[6].strip(), u"author=作者".encode('utf8'))
+        self.assertEquals(lines[5].strip(), u'title=书名'.encode('utf-8'))
+        self.assertEquals(lines[6].strip(), u"author=作者".encode('utf-8'))
 
         cover_file_path = os.path.join(utilities.current_working_dir(), 'cover.png')
         cover_file_exists = os.path.isfile(cover_file_path)
